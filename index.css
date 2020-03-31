@@ -172,7 +172,26 @@ body,html {
     transition:0.4s ease-in-out;
     margin:30px 10px;
 }
+
+.btn_connect {
+    color:white;
+    padding:10px 40px;
+    border-radius:50px;
+    border:2px solid #fff;
+    font-size:18px;
+    font-family: 'Comfortaa', cursive;
+    font-weight:bold;
+    background:transparent;
+    transition:0.4s ease-in-out;
+    margin:30px 10px;
+}
 .btn_one:hover {
+    background:white;
+    cursor:pointer;
+    color:#000;
+}
+
+.btn_connect:hover {
     background:white;
     cursor:pointer;
     color:#000;
@@ -264,6 +283,10 @@ img {
         font-size:30px;
     }
     .btn_one {
+        font-size:14px;
+        padding:8px 20px;
+    }
+    .btn_connect {
         font-size:14px;
         padding:8px 20px;
     }
@@ -369,6 +392,10 @@ button:focus {
     /* The file size of this background image is 93% smaller
        to improve page load speed on mobile internet connections */
     background-image: url(img/skyline-phone.jpg);
+    }
+    .btn_connect{
+        background:white;
+        color:#000;
     }
 
 }
