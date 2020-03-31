@@ -70,21 +70,6 @@ body,html {
 #links a:hover {
     border-bottom:2px solid #fff;
 }
-/* #middle {
-    width:100%;
-    height:80vh;
-    background:linear-gradient(0deg,rgba(0,0,0,1),rgba(0,0,0,0)),url("https://images.unsplash.com/photo-1533658280853-e4a10c25a30d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1226&q=80") center center fixed;
-    background:linear-gradient(0deg,rgba(0,0,0,1),rgba(0,0,0,0)),url("./bean.jpeg") center center fixed;
-    background-size:cover;
-    background-size:100% auto;
-    background-repeat:no-repeat;
-    color:white;
-    display:flex;
-    justify-content:center;
-    flex-direction:column;
-    transition:1s ease-in-out;
-    padding-top:20vh;
-} */
 
 #middle {
     width:100%;
@@ -386,8 +371,5 @@ button:focus {
     width: 100%;
   }
 
-  /* #middle {
-    background:linear-gradient(0deg,rgba(0,0,0,1),rgba(0,0,0,0)),url("./bean.jpeg") center center;
-  } */
 
 }
