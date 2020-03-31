@@ -273,12 +273,12 @@ img {
     #links a {
         margin:0px;
     }
-    #middle {
+    /* #middle {
         width:100%;
         border-radius:0px;
         background-size:cover;
         align-items: center;
-    }
+    } */
     #tagline {
         width:90%;
         font-size:30px;
@@ -309,7 +309,7 @@ img {
     .aboutText {
         display: flex;
         flex-direction: column;
-        margin-top: 0px;
+        margin-top: 15px;
         align-items: center;
     }
     .picture {
@@ -385,12 +385,9 @@ button:focus {
     display: block;
     width: 100%;
   }
-   .aboutText {
-        margin-top: 0px;
-    }
 
-  #middle {
+  /* #middle {
     background:linear-gradient(0deg,rgba(0,0,0,1),rgba(0,0,0,0)),url("./bean.jpeg") center center;
-  }
+  } */
 
 }
