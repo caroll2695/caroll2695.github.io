@@ -258,12 +258,7 @@ img {
     #links a {
         margin:0px;
     }
-    /* #middle {
-        width:100%;
-        border-radius:0px;
-        background-size:cover;
-        align-items: center;
-    } */
+
     #tagline {
         width:90%;
         font-size:30px;
@@ -370,6 +365,5 @@ button:focus {
     display: block;
     width: 100%;
   }
-
 
 }
