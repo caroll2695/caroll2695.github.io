@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import ValidatorField from '../components/ValidatorField.astro';
 import Roles from '../components/Roles.astro';
-import HowIWork from '../components/HowIWork.astro';
 import { galaxyRoles } from '../data/career';
 import { site } from '../data/site';
 
@@ -99,14 +98,6 @@ const stats = [
       <div class="lg:col-span-8">
         <Roles roles={galaxyRoles} />
       </div>
-    </div>
-  </section>
-
-  <!-- How I work: large statements, staggered left edge. -->
-  <section class="gutter py-[var(--space-32)]">
-    <div class="wrap">
-      <h2 class="mb-20 text-[clamp(2rem,4vw,3rem)]" data-reveal>How I work</h2>
-      <HowIWork />
     </div>
   </section>
 </Base>

@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Roles from '../components/Roles.astro';
-import HowIWork from '../components/HowIWork.astro';
 import { galaxyRoles, skills, education } from '../data/career';
 import { site } from '../data/site';
 ---
@@ -31,13 +30,6 @@ import { site } from '../data/site';
         </div>
       </div>
       <div class="lg:col-span-8"><Roles roles={galaxyRoles} detailed /></div>
-    </div>
-  </section>
-
-  <section class="gutter py-[var(--space-24)]">
-    <div class="wrap">
-      <h2 class="mb-16 text-[clamp(2rem,4vw,3rem)]" data-reveal>How I work</h2>
-      <HowIWork />
     </div>
   </section>
 
