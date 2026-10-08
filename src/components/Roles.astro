@@ -1,0 +1,25 @@
+---
+import type { Role } from '../data/career';
+
+interface Props {
+  roles: Role[];
+  detailed?: boolean;
+}
+const { roles, detailed = false } = Astro.props;
+---
+
+<ol class="tl">
+  <span class="tl-fill" aria-hidden="true"></span>
+  {roles.map((r, n) => (
+    <li class="tl-item pb-16 last:pb-0" data-reveal style={`--i:${n % 2}`}>
+      <p class="mono text-sm text-[var(--text-faint)]">{r.period}</p>
+      <h3 class="mt-2 text-[1.625rem]">{r.title}</h3>
+      <p class="mt-3 max-w-[58ch] text-[var(--text-muted)]">{r.summary}</p>
+      {detailed && (
+        <ul class="mt-4 max-w-[58ch] list-disc space-y-2 pl-5 text-[var(--text-muted)] marker:text-[var(--text-faint)]">
+          {r.points.map((p) => <li>{p}</li>)}
+        </ul>
+      )}
+    </li>
+  ))}
+</ol>

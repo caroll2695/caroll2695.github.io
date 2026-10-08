@@ -1,0 +1,35 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  summary: string;
+  glance: { label: string; value: string }[];
+}
+const { title, summary, glance } = Astro.props;
+---
+
+<Base title={`${title} | Caroll George`} description={summary}>
+  <article class="gutter pt-40 pb-[var(--space-32)]">
+    <div class="wrap">
+      <a href="/work" class="mono text-sm text-[var(--text-faint)] transition-colors duration-200 hover:text-[var(--text)]">Back to work</a>
+      <h1 class="mt-8 text-[clamp(3rem,8vw,7rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+        <span class="line" style="--l: 0"><span>{title}</span></span>
+      </h1>
+      <p class="fade-in mt-10 max-w-[52ch] text-lg text-[var(--text-muted)]" style="--d: 300ms">{summary}</p>
+
+      <dl class="mt-20 grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
+        {glance.map((g, n) => (
+          <div data-reveal style={`--i:${n}`}>
+            <dt class="mono text-[clamp(1.5rem,3vw,2.25rem)] leading-none tracking-[-0.03em]">{g.value}</dt>
+            <dd class="mt-3 max-w-[22ch] text-sm text-[var(--text-muted)]">{g.label}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div class="prose-plain mt-24 max-w-[64ch]">
+        <slot />
+      </div>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+
+// Hidden until site.contact has entries (see src/data/site.ts); no empty page ships.
+if (!site.contact.length) return Astro.redirect('/');
+---
+
+<Base title={`Contact | ${site.name}`} description="Ways to get in touch.">
+  <section class="gutter pt-40 pb-[var(--space-32)]">
+    <div class="wrap">
+      <h1 class="text-[clamp(3rem,8vw,7rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+        <span class="line" style="--l: 0"><span>Contact</span></span>
+      </h1>
+      <div class="mt-12 flex flex-wrap gap-4">
+        {site.contact.map((c) => (
+          <a href={c.href} class="btn">{c.label} <span class="nub" aria-hidden="true">↗</span></a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

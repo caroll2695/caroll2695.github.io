@@ -1,0 +1,116 @@
+---
+// Hero visual. Each dot stands for a validator on the staking platform (peak 8,000+).
+// Waves sweep outward like attestations; the cursor lifts nearby dots.
+// Decorative, so aria-hidden. Pauses offscreen and when the tab is hidden; static under reduced motion.
+---
+
+<div class="field" data-field aria-hidden="true"><canvas></canvas></div>
+
+<style>
+  .field { position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 30%, #000 68%);
+    mask-image: linear-gradient(to right, transparent 0%, transparent 30%, #000 68%); }
+  canvas { display: block; width: 100%; height: 100%; }
+  @media (max-width: 767px) {
+    .field { opacity: 0.5;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 75%); }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-field]');
+  if (root) {
+    const canvas = root.querySelector('canvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    const host = root.parentElement as HTMLElement;
+    const reduceQuery = matchMedia('(prefers-reduced-motion: reduce)');
+    const schemeQuery = matchMedia('(prefers-color-scheme: dark)');
+
+    const GAP = 16;
+    let w = 0, h = 0, cols = 0, rows = 0;
+    let rgb = '169,194,160';
+    let phases = new Float32Array(0);
+    let tx = -9999, ty = -9999, mx = -9999, my = -9999;
+    let waves: { x: number; y: number; t0: number }[] = [];
+    let lastWave = 0;
+    let running = false, visible = true, raf = 0;
+
+    const readColor = () => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim().split(/\s+/);
+      if (v.length === 3) rgb = v.join(',');
+    };
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = root.clientWidth; h = root.clientHeight;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(w / GAP); rows = Math.ceil(h / GAP);
+      phases = new Float32Array(cols * rows);
+      for (let i = 0; i < phases.length; i++) phases[i] = Math.random() * 6.283;
+      draw(performance.now());
+    };
+
+    const draw = (now: number) => {
+      ctx.clearRect(0, 0, w, h);
+      const still = reduceQuery.matches;
+      if (!still) {
+        mx += (tx - mx) * 0.12; my += (ty - my) * 0.12;
+        if (now - lastWave > 2800) {
+          lastWave = now;
+          waves.push({ x: w * (0.45 + Math.random() * 0.5), y: h * (0.15 + Math.random() * 0.7), t0: now });
+        }
+        waves = waves.filter((v) => now - v.t0 < 4200);
+      }
+      ctx.fillStyle = `rgb(${rgb})`;
+      for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) {
+          const x = i * GAP + GAP / 2, y = j * GAP + GAP / 2;
+          const p = phases[j * cols + i];
+          let a = 0.3 + 0.12 * Math.sin(p + now / 1400);
+          let r = 1.6;
+          if (!still) {
+            for (const v of waves) {
+              const age = now - v.t0;
+              const d = Math.hypot(x - v.x, y - v.y);
+              const k = (d - age * 0.2) / 55;
+              const ring = Math.exp(-k * k) * (1 - age / 4200);
+              a += ring * 0.75; r += ring * 1.1;
+            }
+            const near = Math.max(0, 1 - Math.hypot(x - mx, y - my) / 150);
+            a += near * near * 0.7; r += near * 1.3;
+          }
+          ctx.globalAlpha = Math.min(a, 1);
+          ctx.fillRect(x - r / 2, y - r / 2, r, r);
+        }
+      }
+      ctx.globalAlpha = 1;
+    };
+
+    const loop = (now: number) => {
+      if (!running) return;
+      draw(now);
+      raf = requestAnimationFrame(loop);
+    };
+    const start = () => { if (running || reduceQuery.matches || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); };
+    const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+    host.addEventListener('pointermove', (e) => {
+      const r = root.getBoundingClientRect();
+      tx = e.clientX - r.left; ty = e.clientY - r.top;
+      if (mx < -9000) { mx = tx; my = ty; }
+    });
+    host.addEventListener('pointerleave', () => { tx = ty = mx = my = -9999; });
+
+    new ResizeObserver(resize).observe(root);
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? start() : stop(); }).observe(root);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    reduceQuery.addEventListener('change', () => { stop(); draw(performance.now()); start(); });
+    schemeQuery.addEventListener('change', () => { readColor(); draw(performance.now()); });
+
+    readColor();
+    resize();
+    start();
+  }
+</script>

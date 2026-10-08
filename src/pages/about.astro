@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Roles from '../components/Roles.astro';
+import HowIWork from '../components/HowIWork.astro';
+import { galaxyRoles, skills, education } from '../data/career';
+import { site } from '../data/site';
+---
+
+<Base title={`About | ${site.name}`} description="Background, roles at Galaxy, how I work, skills and education.">
+  <section class="gutter pt-40 pb-[var(--space-24)]">
+    <div class="wrap">
+      <h1 class="text-[clamp(3rem,8vw,7rem)] font-medium leading-[0.98] tracking-[-0.05em]">
+        <span class="line" style="--l: 0"><span>About</span></span>
+      </h1>
+      <div class="fade-in mt-12 max-w-[60ch] space-y-5 text-lg text-[var(--text-muted)]" style="--d: 300ms">
+        <p>
+          I'm Head of Engineering, Edge and Platforms at Galaxy. I lead a 30-person engineering organization that builds custody, staking, tokenization and DeFi solutions for tier-one banks and asset managers, with globally distributed smart contract and back-end teams across multiple time zones.
+        </p>
+        <p>
+          I came up through site reliability and platform engineering, running the infrastructure behind Galaxy's trading business, then built and launched the staking platform. Today I also lead forward-deployed engineering, where our engineers work on-site with clients.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="gutter py-[var(--space-24)]">
+    <div class="wrap grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <div class="lg:sticky lg:top-32">
+          <h2 class="text-[clamp(2rem,4vw,3rem)]" data-reveal>Roles at Galaxy</h2>
+        </div>
+      </div>
+      <div class="lg:col-span-8"><Roles roles={galaxyRoles} detailed /></div>
+    </div>
+  </section>
+
+  <section class="gutter py-[var(--space-24)]">
+    <div class="wrap">
+      <h2 class="mb-16 text-[clamp(2rem,4vw,3rem)]" data-reveal>How I work</h2>
+      <HowIWork />
+    </div>
+  </section>
+
+  <section class="gutter py-[var(--space-24)]">
+    <div class="wrap">
+      <h2 class="text-[clamp(2rem,4vw,3rem)]" data-reveal>Skills</h2>
+      <div class="mt-12 grid gap-4 md:grid-cols-2">
+        {skills.map((s, n) => (
+          <div class="bezel" data-reveal style={`--i:${n % 2}`}>
+            <div class="core p-7">
+              <h3 class="mono text-xs uppercase tracking-[0.18em] text-[var(--accent)]">{s.group}</h3>
+              <p class="mt-4 text-[var(--text-muted)]">{s.items}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="gutter py-[var(--space-24)]">
+    <div class="wrap max-w-[60ch]" data-reveal>
+      <h2 class="text-[clamp(2rem,4vw,3rem)]">Education</h2>
+      <p class="mt-6 text-lg text-[var(--text-muted)]">{education.degree}, {education.school}. {education.honors}.</p>
+      <p class="mt-4 text-[var(--text-muted)]">Certifications and coursework: {education.certs.join('; ')}.</p>
+    </div>
+  </section>
+</Base>

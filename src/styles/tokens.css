@@ -1,0 +1,67 @@
+/* Three-layer tokens: primitive -> semantic -> component.
+   Design read: executive portfolio, calm editorial-technical, dials 7 / 7 / 3.
+   One accent (muted sage). One shape rule: pills for buttons and nav, 2rem squircles for cards. */
+
+:root {
+  color-scheme: light dark;
+
+  /* 1. Primitives */
+  --font-sans: 'Geist Variable', 'Helvetica Neue', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', monospace;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+
+  /* 2. Semantic (light) */
+  --bg: #f3f3f1;
+  --surface: #ffffff;
+  --shell: rgba(16, 16, 17, 0.045);
+  --text: #101011;
+  --text-muted: #4f4f4d;
+  --text-faint: #6b6b69;
+  --line: rgba(16, 16, 17, 0.1);
+  --highlight: rgba(255, 255, 255, 0.9);
+  --glass: rgba(255, 255, 255, 0.6);
+  --accent: #4b5d45;
+  --accent-rgb: 75 93 69;
+  --on-accent: #ffffff;
+
+  /* 3. Component */
+  --content-max: 76rem;
+  --gutter: clamp(1.25rem, 5vw, 4.5rem);
+  --radius-card: 2rem;
+  --bezel: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0a0b;
+    --surface: #121214;
+    --shell: rgba(255, 255, 255, 0.04);
+    --text: #ececea;
+    --text-muted: #a4a4a2;
+    --text-faint: #86868a;
+    --line: rgba(255, 255, 255, 0.09);
+    --highlight: rgba(255, 255, 255, 0.08);
+    --glass: rgba(20, 20, 22, 0.55);
+    --accent: #a9c2a0;
+    --accent-rgb: 169 194 160;
+    --on-accent: #0a0a0b;
+  }
+}
+
+html { background: var(--bg); color: var(--text); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body { line-height: 1.6; text-wrap: pretty; overflow-x: clip; }
+h1, h2, h3 { font-family: var(--font-sans); font-weight: 500; letter-spacing: -0.04em; line-height: 1.04; text-wrap: balance; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+::selection { background: rgb(var(--accent-rgb) / 0.3); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+}
